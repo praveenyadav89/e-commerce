@@ -612,28 +612,6 @@ DELETE /api/products/:id
 
 ---
 
-# Image Upload API
-
-## Upload Product Images
-
-```http
-POST /api/uploads/products
-```
-
-### Form Data
-
-```text
-images
-```
-
-Type:
-
-```text
-multipart/form-data
-```
-
----
-
 # Cart APIs
 
 ## Add To Cart
