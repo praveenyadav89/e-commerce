@@ -6,7 +6,6 @@ const userController = require("../controllers/user.controller");
 
 const { protect } = require("../middlewares/auth.middleware");
 
-const { authorize } = require("../middlewares/role.middleware");
 const { hasPermission } = require("../middlewares/permission.middleware");
 
 router.get("/profile", protect, userController.getProfile);

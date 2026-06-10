@@ -66,12 +66,7 @@ exports.loginUser = async (email, password) => {
   if (!isMatch) {
     throw new Error("Invalid Credentials");
   }
-  console.log(
-    "LOGIN USER:",
-    user,
-    "process.env.JWT_SECRET",
-    process.env.JWT_SECRET,
-  );
+
   const token = jwt.sign(
     {
       id: user._id,

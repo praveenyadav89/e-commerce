@@ -8,19 +8,9 @@ const { protect } = require("../middlewares/auth.middleware");
 
 const { hasPermission } = require("../middlewares/permission.middleware");
 console.log("hasPermission", hasPermission);
-router.post(
-  "/",
-  protect,
+router.post("/", protect, orderController.placeOrder);
 
-  orderController.placeOrder,
-);
-
-router.get(
-  "/my-orders",
-  protect,
-
-  orderController.getMyOrders,
-);
+router.get("/my-orders", protect, orderController.getMyOrders);
 
 router.get("/:id", protect, orderController.getOrderById);
 
