@@ -53,7 +53,8 @@ A secure and scalable E-Commerce Backend built using Node.js, Express.js, and Mo
 
 ## Category Management
 
-- Create Category
+- Create Parent Category
+- Create Sub Category
 - Update Category
 - Delete Category
 - Get Categories
@@ -86,6 +87,7 @@ A secure and scalable E-Commerce Backend built using Node.js, Express.js, and Mo
 - View Orders
 - View Order Details
 - Update Order Status
+- Admin View all order
 
 ---
 
@@ -93,8 +95,15 @@ A secure and scalable E-Commerce Backend built using Node.js, Express.js, and Mo
 
 - Total Users
 - Total Products
+- Total Category
 - Total Orders
 - Total Revenue
+
+## Dashboard Admin
+
+- Admin Latest Order
+- Admin Recent User
+- Admin Order Summary
 
 ---
 
@@ -128,13 +137,17 @@ src
 tests
 
 ├── auth
-├── role
+├── cart
 ├── product
-├── order
-├── permission
+├── helper
 └── category
+setup.js
 
 server.js
+jest.config.js
+package.json
+README.md
+env.example
 
 ````
 
@@ -374,7 +387,7 @@ JWT_EXPIRE=7d
 ## Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/praveenyadav89/e-commerce/
 ```
 
 ---
@@ -423,16 +436,6 @@ npm start
 
 ---
 
-# Testing
-
-Run all tests:
-
-```bash
-npm test
-```
-
----
-
 # API Documentation
 
 Base URL
@@ -457,8 +460,8 @@ POST /api/auth/register
 
 ```json
 {
-  "name": "Prince",
-  "email": "prince@gmail.com",
+  "name": "Customer",
+  "email": "customer@gmail.com",
   "password": "Password@123"
 }
 ```
@@ -477,10 +480,15 @@ POST /api/auth/login
 
 ```json
 {
-  "email": "prince@gmail.com",
+  "email": "customer@gmail.com",
   "password": "Password@123"
 }
 ```
+
+If we want to create Admin user then add role in register payload
+
+role: "SUPER_ADMIN"
+for customer we can set role blank or not define its auto set
 
 ---
 
@@ -541,7 +549,7 @@ PUT /api/users/:id/role
 ## Create Category
 
 ```http
-POST /api/categories
+POST /api/categories/create
 ```
 
 ---
@@ -695,7 +703,7 @@ PUT /api/orders/:id/status
 
 6 Create Product
 
-7 Upload Product Images
+7 Upload Product Images into product create payload
 
 8 Add Product To Cart
 
@@ -900,3 +908,41 @@ User
 Category
  └── Products
 ```
+
+# Testing
+
+Run all tests:
+
+```bash
+npm test
+```
+
+## npm test -- --coverage
+
+## Test Coverage Report
+
+Generated using Jest coverage
+
+### Overall Coverage
+
+| Metric     | Coverage         |
+| ---------- | ---------------- |
+| Statements | 69.81% (414/593) |
+| Branches   | 32.38% (34/105)  |
+| Functions  | 30.43% (28/92)   |
+| Lines      | 69.88% (413/591) |
+
+---
+
+### Module-wise Coverage
+
+| Module        | Statements | Branches | Functions | Lines  |
+| ------------- | ---------- | -------- | --------- | ------ |
+| src           | 100%       | 100%     | 100%      | 100%   |
+| controllers   | 56.55%     | 0%       | 24.24%    | 56.55% |
+| middlewares   | 59.52%     | 42.85%   | 33.33%    | 58.53% |
+| models        | 100%       | 100%     | 100%      | 100%   |
+| routes        | 100%       | 100%     | 100%      | 100%   |
+| services      | 54.81%     | 31.03%   | 21.95%    | 55.04% |
+| utils         | 92.85%     | 50%      | 75%       | 92.85% |
+| tests/helpers | 100%       | 100%     | 100%      | 100%   |

@@ -3,7 +3,6 @@ const asyncHandler = require("../utils/asyncHandler");
 const cartService = require("../services/cart.service");
 
 exports.addToCart = asyncHandler(async (req, res) => {
-  console.log("Adding to cart:", req.body);
   const cart = await cartService.addToCart(req.user.id, req.body);
 
   res.status(200).json({

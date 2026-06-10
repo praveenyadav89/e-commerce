@@ -57,7 +57,9 @@ exports.getCart = async (userId) => {
   let totalAmount = 0;
 
   cart.items.forEach((item) => {
-    totalAmount += item.product.price * item.quantity;
+    if (item.product && item.product.price) {
+      totalAmount += item.product.price * item.quantity;
+    }
   });
 
   return {
