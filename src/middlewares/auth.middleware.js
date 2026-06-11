@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const BlacklistedToken = require("../models/BlacklistedToken");
 
 exports.protect = async (req, res, next) => {
   let token;
@@ -14,6 +15,17 @@ exports.protect = async (req, res, next) => {
     return res.status(401).json({
       success: false,
       message: "Access Denied",
+    });
+  }
+
+  const blacklisted = await BlacklistedToken.findOne({
+    token,
+  });
+
+  if (blacklisted) {
+    return res.status(401).json({
+      success: false,
+      message: "Token expired. Please login again.",
     });
   }
 

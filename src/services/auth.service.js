@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 const Role = require("../models/Role");
+const BlacklistedToken = require("../models/BlacklistedToken");
 
 exports.registerUser = async (payload) => {
   const { name, email, password, role } = payload;
@@ -83,5 +84,23 @@ exports.loginUser = async (email, password) => {
   return {
     token,
     user,
+  };
+};
+
+exports.logoutUser = async (token) => {
+  const existingToken = await BlacklistedToken.findOne({
+    token,
+  });
+
+  if (existingToken) {
+    throw new Error("User already logged out");
+  }
+  await BlacklistedToken.create({
+    token,
+  });
+
+  return {
+    success: true,
+    message: "Logout successful",
   };
 };

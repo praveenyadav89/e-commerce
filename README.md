@@ -29,6 +29,7 @@ A secure and scalable E-Commerce Backend built using Node.js, Express.js, and Mo
 - Protected Routes
 - Role Management
 - Permission Management
+- User Logout
 
 ---
 
@@ -38,6 +39,7 @@ A secure and scalable E-Commerce Backend built using Node.js, Express.js, and Mo
 - Login User
 - Assign Role To User
 - View Users
+- User Logout
 
 ---
 
@@ -492,6 +494,44 @@ for customer we can set role blank or not define its auto set
 
 ---
 
+## Logout User
+
+### Request
+
+```http
+POST /api/auth/logout
+```
+
+### Headers
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+### Success Response
+
+```json
+{
+  "success": true,
+  "message": "Logout successful"
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "message": "Token has been invalidated. Please login again."
+}
+```
+
+### Notes
+
+- Logout is implemented using JWT token blacklisting.
+- Blacklisted tokens cannot access protected APIs.
+- Users must log in again to obtain a new valid token.
+
 # Role APIs
 
 ## Create Role
@@ -688,6 +728,52 @@ PUT /api/orders/:id/status
 
 ---
 
+# Dashboard APIs
+
+## Admin Dashboard Summary
+
+```http
+GET /api/admin/dashboard
+```
+
+---
+
+## Admin Dashboard Latest Order
+
+```http
+GET /api/admin/dashboard/latest-orders
+```
+
+---
+
+## Admin Dashboard Recent User
+
+```http
+GET /api/admin/dashboard/recent-users
+```
+
+---
+
+---
+
+## Add Permission Matrix (Very Important)
+
+````md
+# Role & Permission Matrix
+
+| Permission      | SUPER_ADMIN | ADMIN | MANAGER | CUSTOMER |
+| --------------- | ----------- | ----- | ------- | -------- |
+| Create Product  | ✅          | ✅    | ❌      | ❌       |
+| Update Product  | ✅          | ✅    | ❌      | ❌       |
+| Delete Product  | ✅          | ❌    | ❌      | ❌       |
+| Create Category | ✅          | ✅    | ❌      | ❌       |
+| Update Category | ✅          | ✅    | ❌      | ❌       |
+| Delete Category | ✅          | ❌    | ❌      | ❌       |
+| View Dashboard  | ✅          | ✅    | ✅      | ❌       |
+| Manage Orders   | ✅          | ✅    | ❌      | ❌       |
+| Add To Cart     | ❌          | ❌    | ❌      | ✅       |
+| Place Order     | ❌          | ❌    | ❌      | ✅       |
+
 # End To End Workflow
 
 ```text
@@ -713,6 +799,7 @@ PUT /api/orders/:id/status
 
 11 View Dashboard
 ```
+````
 
 ---
 
@@ -763,7 +850,7 @@ Stores role definitions and permissions.
 {
   "_id": "ObjectId",
   "name": "SUPER_ADMIN",
-  "description": "Syatem owner",
+  "description": "System owner",
   "permissions": ["CREATE_PRODUCT", "UPDATE_PRODUCT"]
 }
 ```
@@ -786,7 +873,7 @@ Stores product categories and supports parent-child hierarchy.
   "_id": "ObjectId",
   "name": "Electronics",
   "slug": "electronics",
-  "description": "This is cloth category",
+  "description": "This category contains electronic products",
   "parentCategory": null,
   "isActive": true
 }
@@ -946,3 +1033,13 @@ Generated using Jest coverage
 | services      | 54.81%     | 31.03%   | 21.95%    | 55.04% |
 | utils         | 92.85%     | 50%      | 75%       | 92.85% |
 | tests/helpers | 100%       | 100%     | 100%      | 100%   |
+
+# Postman Collection
+
+The complete API collection is included with the project.
+
+File:
+
+```text
+postman/E-commerce-assignment.postman_collection.json
+```

@@ -11,7 +11,6 @@ exports.hasPermission = (permission) => async (req, res, next) => {
   }
 
   const permissions = user.role.permissions;
-
   if (!permissions.includes(permission)) {
     return res.status(403).json({
       success: false,

@@ -52,11 +52,19 @@ exports.placeOrder = async (userId) => {
 };
 
 exports.getMyOrders = async (userId) => {
-  return await Order.find({
+  const orders = await Order.find({
     user: userId,
   }).sort({
     createdAt: -1,
   });
+  const totalOrders = await Order.countDocuments({
+    user: userId,
+  });
+
+  return {
+    totalOrders,
+    orders,
+  };
 };
 
 exports.getOrderById = async (id) => {

@@ -7,13 +7,13 @@ const orderController = require("../controllers/order.controller");
 const { protect } = require("../middlewares/auth.middleware");
 
 const { hasPermission } = require("../middlewares/permission.middleware");
-console.log("hasPermission", hasPermission);
+
 router.post("/", protect, orderController.placeOrder);
 
 router.get("/my-orders", protect, orderController.getMyOrders);
 
 router.get("/:id", protect, orderController.getOrderById);
-
+console.log("hasPermission", hasPermission);
 router.get(
   "/admin/all",
   protect,
